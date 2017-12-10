@@ -47,7 +47,7 @@ void loop() {
     distance= duration*SPEED_OF_SOUND/2;
     // Prints the distance on the Serial Monitor
     if (distance < MAX_DISTANCE){
-      Serial.print("Distance: ");
+      // Serial.print("Distance: ");
       Serial.println(distance);
   
     }
