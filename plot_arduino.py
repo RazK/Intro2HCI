@@ -1,4 +1,5 @@
 import serial
-ser = serial.Serial('/dev/tty.usbserial', 9600)
+device = "/dev/tty.wchusbserial1420"
+ser = serial.Serial(device, 9600)
 while True:
-    print (ser.readline())
+    print(str(ser.readline()))
