@@ -26,14 +26,15 @@ with serial.Serial(device, DEFAULT_BAUD_RATE) as ser:
     while True:
         # signal = np.array([str(ser.readline()).split("\\r;")[0].split(
         #     "b'")[1] for _ in range(signal_size * frames)]).astype(np.float64)
-        # signal = np.array([ser.readline())])
-        b_bytes = ser.readline()
-        print(b_bytes)
-        s = str(b_bytes, 'utf-8')
-        print(s)
+        # # signal = np.array([ser.readline())])
+        # b_bytes = ser.readline()
+        # print(b_bytes)
+        # s = str(b_bytes, 'utf-8')
+        # print(s)
 
+        signal = np.frombuffer(ser , count=signal_size)
 
-        plt.plot(s)
+        plt.plot(signal)
         # plt.imshow(signal.reshape(frames, signal_size))
         # plt.show()
 
