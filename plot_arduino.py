@@ -1,4 +1,5 @@
 import serial
+import numpy as np
 
 # ENVIRONMENT
 SHIMMY = "SHIMMY"
@@ -15,6 +16,7 @@ HOST = SHIMMY  #
 
 device = HOST2DEV[HOST]
 
-ser = serial.Serial(device, DEFAULT_BAUD_RATE)
-while True:
-    print(str(ser.readline()))
+with serial.Serial(device, DEFAULT_BAUD_RATE) as ser:
+    while True:
+        signal = np.array(ser.read_until(ser))
+        print(ser.readline())
