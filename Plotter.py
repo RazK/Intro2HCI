@@ -29,6 +29,15 @@ def makeFig():  # Create a function that makes our desired plot
     #    useOffset=False)  # Force matplotlib to NOT autoscale y axis
     #plt2.legend(loc='upper right')  # plot the legend
 
+class Plotter():
+    """
+
+    """
+    def __init__(self):
+        """
+
+        """
+        pass
 
 if __name__ == "__main__":
 
