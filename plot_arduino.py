@@ -11,7 +11,7 @@ SHIMMY = "SHIMMY"
 RAZ = "RAZ"
 HOSTS = {RAZ, SHIMMY}
 HOST2DEV = {SHIMMY : "/dev/tty.wchusbserial1420",
-            RAZ : "NO DEVICE"}
+            RAZ : "COM5"}
 DEFAULT_BAUD_RATE = 9600
 
 GUASSIAN_KERNEL = np.array([1, 1]).astype(np.float64).reshape(1, 2)
@@ -23,9 +23,9 @@ frames = 1
 
 MAX_DIST = 50
 
-# CURRENT HOST #
+# CURRENT HOST # 
 # ============ #
-HOST = SHIMMY  #
+HOST = RAZ  #
 # ============ #
 device = HOST2DEV[HOST]
 
@@ -143,17 +143,12 @@ with serial.Serial(device, DEFAULT_BAUD_RATE) as ser:
         fourier = np.fft.fft(blurred)
 
         spec = f_spectrum(fourier, True)
-
-
-
         show_dual_plot(np.tile(blurred, (100, 1)), np.tile(spec, (100, 1)))
 
         # except ValueError:
         #     print("error reading stream")
 
-
-
-
+        #ser.read()
 
 
 
