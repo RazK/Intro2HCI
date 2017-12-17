@@ -13,7 +13,7 @@ cnt = 0
 
 
 def makeFig():  # Create a function that makes our desired plot
-    plt.ylim(00, 1000)  # Set y min and max values
+    plt.ylim(0, 1000)  # Set y min and max values
     plt.title('My Live Streaming Sensor Data')  # Plot the title
     plt.grid(True)  # Turn the grid on
     plt.ylabel('Distance CM')  # Set ylabels
@@ -44,11 +44,13 @@ if __name__ == "__main__":
     while True:  # While loop that loops forever
         while (arduinoData.inWaiting() == 0):  # Wait here until there is data
             pass  # do nothing
-        arduinoString = str(arduinoData.readline(), 'utf-8')  # read the line of text
+        distance = float(str(arduinoData.readline(), 'utf-8'))  # read the
+        # line of
+        # text
         # from
         #  the serial port
-        dataArray = arduinoString.split('\n')  # Split it into an array called dataArray
-        distance = float(dataArray[0])  # Convert first element to floating number and
+        # distance = float(dataArray[0])  # Convert first element to floating
+        #  number and
         #  put in temp
         #P = float(dataArray[1])  # Convert second element to floating
         # number and
