@@ -42,11 +42,14 @@ class Data_Recorder:
 
         data = np.zeros(shape=DATA_SHAPE + (frames,))
 
-        self.reader.open_seriel()
+        self.reader.open_serial()
 
+        for i in range(frames):
+            data[i] = self.reader.read_frame()
 
+        self.reader.close_serial()
 
-        self.reader.close_seriel()
+        np.save(path, data)
 
 
 

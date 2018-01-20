@@ -1,6 +1,7 @@
 """
 
 """
+import serial
 
 # ENVIRONMENT
 SHIMMY = "SHIMMY"
@@ -18,30 +19,30 @@ DEFAULT_BAUD_RATE = 9600
 
 # CURRENT HOST #
 # ============ #
-HOST = SHIMMY  #
+# HOST = SHIMMY  #
+HOST = RAZ     #
 # ============ #
-device = HOST2DEV[HOST]
 
-# guassian = g_kernel(7, one_d=True)
-# signal = np.zeros((signal_size, frames))
 
 SENSORS = 12
 FRAME_WIDTH = 32
 
 
-class Reader():
+class Reader:
 
     def __init__(self):
-        pass
+        self.device = HOST2DEV[HOST]
+        self.arduinoSerialData = serial.Serial(self.device, DEFAULT_BAUD_RATE)
 
-    def open_seriel(self):
+
+    def open_serial(self):
         """
         opens communication with arudino port
         :return:
         """
         pass
 
-    def close_seriel(self):
+    def close_serial(self):
         pass
 
     def read_frame(self):
