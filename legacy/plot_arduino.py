@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import math
 from scipy.ndimage.filters import convolve as convolve
 
-
-
 # ENVIRONMENT
 SHIMMY = "SHIMMY"
 RAZ = "RAZ"
@@ -31,7 +29,6 @@ device = HOST2DEV[HOST]
 
 # guassian = g_kernel(7, one_d=True)
 signal = np.zeros((signal_size, frames))
-
 
 def amplitude(coefficient):
     """
@@ -123,32 +120,50 @@ def show_dual_plot(im1, im2):
     ax2.imshow(im2, cmap='gray')
     plt.show()
 
-guassian = g_kernel(7, one_d=True)
+def show_tri_plot(im1, im2, im3):
+    """
+    Show 4 images in 4 way plot
+    """
+    fig = plt.figure()
+    f, (ax1, ax2, ax3) = plt.subplots(3, 1, sharex='col')
+    ax1.imshow(im1, cmap='gray')
+    ax2.imshow(im2, cmap='gray')
+    ax3.imshow(im3, cmap='gray')
+    plt.show()
 
-with serial.Serial(device, DEFAULT_BAUD_RATE) as ser:
-    while True:
-        try:
-            signal = np.array([str(ser.readline(), 'utf-8')
-                               for _ in range(signal_size * frames)])\
-                .astype(np.float64).reshape(frames, signal_size)
-        except ValueError as e:
-            print("error reading stream")
-        signal[0, 0] = 0
-        signal[0, -1] = MAX_DIST
 
-        # plt.plot(signal)
-        # plt.show()
-        # tiles = np.tile(signal, (100, 1))
-        blurred = blur(signal, guassian)
-        fourier = np.fft.fft(blurred)
+def show_easy(a, b, c):
+    show_tri_plot(np.tile(a, (100, 1)), np.tile(b, (100, 1)),  np.tile(c,
+                                                                       (100, 1)))
 
-        spec = f_spectrum(fourier, True)
-        show_dual_plot(np.tile(blurred, (100, 1)), np.tile(spec, (100, 1)))
 
-        # except ValueError:
-        #     print("error reading stream")
+if __name__ == '__main__':
 
-        #ser.read()
+    guassian = g_kernel(7, one_d=True)
 
+    with serial.Serial(device, DEFAULT_BAUD_RATE) as ser:
+        while True:
+            try:
+                signal = np.array([str(ser.readline(), 'utf-8')
+                                   for _ in range(signal_size * frames)])\
+                    .astype(np.float64).reshape(frames, signal_size)
+            except ValueError as e:
+                print("error reading stream")
+            signal[0, 0] = 0
+            signal[0, -1] = MAX_DIST
+
+            # plt.plot(signal)
+            # plt.show()
+            # tiles = np.tile(signal, (100, 1))
+            blurred = blur(signal, guassian)
+            fourier = np.fft.fft(blurred)
+
+            spec = f_spectrum(fourier, True)
+            show_dual_plot(np.tile(blurred, (100, 1)), np.tile(spec, (100, 1)))
+
+            # except ValueError:
+            #     print("error reading stream")
+
+            #ser.read()
 
 
