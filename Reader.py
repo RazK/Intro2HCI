@@ -2,6 +2,7 @@
 
 """
 import serial
+import numpy as np
 
 # ENVIRONMENT
 SHIMMY = "SHIMMY"
@@ -32,22 +33,34 @@ class Reader:
 
     def __init__(self):
         self.device = HOST2DEV[HOST]
-        self.arduinoSerialData = serial.Serial(self.device, DEFAULT_BAUD_RATE)
 
+        self.serial = serial.Serial(self.device, DEFAULT_BAUD_RATE)
 
     def open_serial(self):
         """
         opens communication with arudino port
         :return:
         """
-        pass
+
+        self.serial.open()
 
     def close_serial(self):
-        pass
+        self.serial.close()
 
     def read_frame(self):
         """
         Returns a single reading from all the sonsors, reduced to one frame.
         :return:
         """
-        pass
+        while (self.serial.inWaiting() <= 0):
+            pass
+
+        data = self.serial.readline()
+        distances = np.array(data)
+        #todo: may need to decode the data using utf-8
+
+
+        return distances
+            # distance = float(str(data, "utf-8"))
+
+            # distances = np.roll(distances, 1)
